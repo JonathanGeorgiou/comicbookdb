@@ -23,7 +23,7 @@ const theme = extendTheme({
       },
       heroGradientEnd: {
         default: '#FF0080',
-        _dark: '#fbec8f',
+        _dark: '#1bec8f',
       },
     },
     radii: {

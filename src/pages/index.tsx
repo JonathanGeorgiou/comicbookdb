@@ -1,56 +1,47 @@
-import {
-  Link as ChakraLink,
-  Text,
-  Code,
-  List,
-  ListIcon,
-  ListItem,
-} from '@chakra-ui/react'
-import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
+import { Container, Flex, Text } from "@chakra-ui/react";
+import React from "react";
+import useSwr from "swr";
+import { CTA } from "../components/CTA";
+import { DarkModeSwitch } from "../components/DarkModeSwitch";
+import { Hero } from "../components/Hero";
+import { Md5 } from "ts-md5";
+import { Main } from "../components/Main";
+import { urlBuilder } from "../utils/urlUtils";
 
-import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import { CTA } from '../components/CTA'
-import { Footer } from '../components/Footer'
+const index = (props) => {
+  console.log(props.data.results);
+  return (
+    <>
+      <Hero />
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        // height="1vh"
+        bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)"
+        bgClip="text"
+      >
+        <Text color="text">{JSON.stringify(props.data.results[0])}</Text>
+      </Flex>
+      <DarkModeSwitch />
+      <CTA />
+    </>
+  );
+};
 
-const Index = () => (
-  <Container height="100vh">
-    <Hero />
-    <Main>
-      <Text color="text">
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
-        <Code>TypeScript</Code>.
-      </Text>
+export async function getServerSideProps() {
+  const req = await fetch(urlBuilder("comics"));
+  const res = await req.json();
+  //   console.log(info);
 
-      <List spacing={3} my={0} color="text">
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink
-            isExternal
-            href="https://chakra-ui.com"
-            flexGrow={1}
-            mr={2}
-          >
-            Chakra UI <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-      </List>
-    </Main>
+  if (!res) {
+    return {
+      notFound: true,
+    };
+  }
 
-    <DarkModeSwitch />
-    <Footer>
-      <Text>Next ❤️ Chakra</Text>
-    </Footer>
-    <CTA />
-  </Container>
-)
+  return {
+    props: res, // will be passed to the page component as props
+  };
+}
 
-export default Index
+export default index;
