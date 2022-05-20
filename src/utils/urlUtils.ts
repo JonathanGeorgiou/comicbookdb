@@ -12,3 +12,17 @@ export const urlBuilder = (slug: string) => {
 
     return url
 }
+
+export async function getImage(url) {
+  const req = await fetch(url);
+  const res = await req
+  console.log(res);
+
+  if (!res) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return res
+}

@@ -3,15 +3,14 @@ import { Flex, Heading } from '@chakra-ui/react'
 export const Hero = ({ title }: { title: string }) => (
   <Flex
     justifyContent="center"
-    alignItems="center"
-    height="100vh"
+    height="20vh"
     bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)"
     bgClip="text"
   >
-    <Heading fontSize="6vw">{title}</Heading>
+    <Heading fontSize="4vw">{title}</Heading>
   </Flex>
 )
 
 Hero.defaultProps = {
-  title: 'JONATTHAN GEORGIOUUUUUU',
+  title: 'Comic Book DB',
 }
